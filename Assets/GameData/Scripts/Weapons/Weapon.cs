@@ -12,35 +12,22 @@ namespace Game.Weapon
         [SerializeField] protected float reloadTime;
         [SerializeField] protected int maxCountInHands;
         [SerializeField] protected int maxCountInBag;
-        [SerializeField] protected Sprite icon;
+        [SerializeField] public Sprite icon;
 
-        protected int countInHands;
-        protected int countInBag;
+        public int countInHands;
+        public int countInBag;
         protected List<GameObject> poolShell = new List<GameObject>();
 
-        private int numberWeapon;
-        private Weapon chosenWeapon;
         private Coroutine ShutingCoroutin;
+        private Coroutine RemoteCoroutine;
+        private bool canShut = true;
 
         protected void Start()
         {
             countInHands = maxCountInHands;
             countInBag = maxCountInBag;
 
-            chosenWeapon = WeaponsManager.instance.weapons[numberWeapon];
-            WeaponsManager.instance.iconWeapon.sprite = chosenWeapon.icon;
-            ViewCountShell();
-        }
-
-        private void ChangeWeapon()
-        {
-            numberWeapon++;
-
-            if (numberWeapon >= WeaponsManager.instance.weapons.Count)
-                numberWeapon = 0;
-
-            chosenWeapon = WeaponsManager.instance.weapons[numberWeapon];
-            WeaponsManager.instance.iconWeapon.sprite = chosenWeapon.icon;
+           WeaponsManager.instance.ViewCountShell();
         }
 
         public virtual void Shuting()
@@ -50,8 +37,13 @@ namespace Game.Weapon
 
         public virtual void StopShut()
         {
+            canShut = false;
             if (ShutingCoroutin != null)
                 StopCoroutine(ShutingCoroutin);
+            if (countInBag > 0 && countInHands == 0 && RemoteCoroutine == null)
+                RemoteCoroutine = StartCoroutine(RemoteWeapon());
+
+            StartCoroutine(ShutDelay());
         }
 
         public virtual void FillingPoolShell()
@@ -68,8 +60,11 @@ namespace Game.Weapon
         {
             while (countInHands > 0)
             {
-                countInHands--;
-                ViewCountShell();
+                while (!canShut)
+                {
+                    yield return null;
+                }
+
                 for (int i = 0; i < poolShell.Count; i++)
                 {
                     if (!poolShell[i].activeSelf)
@@ -80,8 +75,11 @@ namespace Game.Weapon
                         break;
                     }
                 }
-                if (countInBag > 0 && countInHands == 0)
-                    StartCoroutine(RemoteWeapon());
+                countInHands--;
+                WeaponsManager.instance.ViewCountShell();
+
+                if (countInBag > 0 && countInHands == 0 && RemoteCoroutine == null)
+                    RemoteCoroutine = StartCoroutine(RemoteWeapon());
 
                 yield return new WaitForSeconds(timeToAttack);
             }
@@ -89,6 +87,9 @@ namespace Game.Weapon
 
         private IEnumerator RemoteWeapon()
         {
+            if (ShutingCoroutin != null)
+                StopCoroutine(ShutingCoroutin);
+
             yield return new WaitForSeconds(reloadTime);
             int countShell;
             if (countInBag >= maxCountInHands)
@@ -100,12 +101,14 @@ namespace Game.Weapon
 
             countInBag -= countShell;
             countInHands = countShell;
-            ViewCountShell();
+            WeaponsManager.instance.ViewCountShell();
+            RemoteCoroutine = null;
         }
 
-        private void ViewCountShell()
+        private IEnumerator ShutDelay()
         {
-            WeaponsManager.instance.shellText.text = $"{chosenWeapon.countInHands}/{chosenWeapon.countInBag}";
+            yield return new WaitForSeconds(timeToAttack);
+            canShut = true;
         }
     }
 }

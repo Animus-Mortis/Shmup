@@ -10,7 +10,6 @@ namespace Game.Weapon
         {
             if ((mask.value & (1 << other.gameObject.layer)) > 0)
             {
-                print(123);
                 if (other.GetComponent<HealthBot>())
                 {
                     other.GetComponent<HealthBot>().TakeDamage(damage);
@@ -18,7 +17,6 @@ namespace Game.Weapon
 
                 gameObject.SetActive(false);
             }
-            print(3);
         }
     }
 }

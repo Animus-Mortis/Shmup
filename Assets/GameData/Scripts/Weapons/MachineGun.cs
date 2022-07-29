@@ -1,7 +1,7 @@
 
 namespace Game.Weapon
 {
-    public class Fireball : Weapon
+    public class MachineGun : Weapon
     {
         private void Start()
         {
@@ -12,9 +12,6 @@ namespace Game.Weapon
         public override void Shuting()
         {
             base.Shuting();
-            countInHands = maxCountInHands;
-            countInBag = maxCountInBag;
-
         }
 
         public override void StopShut()

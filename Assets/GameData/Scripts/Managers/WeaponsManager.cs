@@ -9,14 +9,47 @@ namespace Game.Manager
         public static WeaponsManager instance;
 
         public Transform shutPoint;
-        public List<Game.Weapon.Weapon> weapons;
+        public List<Weapon.Weapon> weapons;
         public Image iconWeapon;
         public Text shellText;
+
+        private int numberWeapon;
+        private Weapon.Weapon chosenWeapon;
 
         private void Awake()
         {
             if (instance == null) instance = this;
             else Destroy(this);
+
+            chosenWeapon = weapons[numberWeapon];
+            iconWeapon.sprite = chosenWeapon.icon;
+        }
+
+        public void ChangeWeapon()
+        {
+            numberWeapon++;
+
+            if (numberWeapon >= weapons.Count)
+                numberWeapon = 0;
+
+            chosenWeapon = weapons[numberWeapon];
+            iconWeapon.sprite = chosenWeapon.icon;
+            ViewCountShell();
+        }
+
+        public void Shuting()
+        {
+            chosenWeapon.Shuting();
+        }
+
+        public void StopShut()
+        {
+            chosenWeapon.StopShut();
+        }
+
+        public void ViewCountShell()
+        {
+           shellText.text = $"{chosenWeapon.countInHands}/{chosenWeapon.countInBag}";
         }
     }
 }

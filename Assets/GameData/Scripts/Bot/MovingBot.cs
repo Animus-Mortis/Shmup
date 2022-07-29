@@ -22,10 +22,10 @@ namespace Game.Bot
         {
             agent = GetComponent<NavMeshAgent>();
             MeleeAttack = GetComponent<MeleeAttackBot>();
-            playerTransform = ListLinkObject.instance.Player;
         }
         private void Start()
         {
+            playerTransform = ListLinkObject.instance.Player;
             AddMovingPoints(spawnBotsManager.movingPoints);
             StartCoroutine(CheckPosition());
             StartCoroutine(CheckPlayer());
