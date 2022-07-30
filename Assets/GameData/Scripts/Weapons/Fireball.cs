@@ -12,9 +12,6 @@ namespace Game.Weapon
         public override void Shuting()
         {
             base.Shuting();
-            countInHands = maxCountInHands;
-            countInBag = maxCountInBag;
-
         }
 
         public override void StopShut()
