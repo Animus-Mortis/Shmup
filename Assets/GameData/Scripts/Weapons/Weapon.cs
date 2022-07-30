@@ -12,6 +12,7 @@ namespace Game.Weapon
         [SerializeField] protected float reloadTime;
         [SerializeField] protected int maxCountInHands;
         [SerializeField] protected int maxCountInBag;
+        [SerializeField] public WeaponType type;
         [SerializeField] public Sprite icon;
 
         public int countInHands;
