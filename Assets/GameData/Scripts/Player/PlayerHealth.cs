@@ -10,6 +10,8 @@ namespace Game.Player
         [SerializeField] private UnityEvent DieEvent;
         [SerializeField] private UnityEvent<float,float> ChangeHPOnUI;
 
+        private bool die;
+
         private void Start()
         {
             nowHP = maxHP;
@@ -19,13 +21,27 @@ namespace Game.Player
         {
             nowHP -= damage;
             ChangeHPOnUI.Invoke(nowHP, maxHP);
-            if (nowHP <= 0)
+            if (nowHP <= 0 && !die)
                 Die();
         }
 
         public void Die()
         {
+            die = true;
             DieEvent.Invoke();
+        }
+
+        public void SetHP(int value)
+        {
+            nowHP += value;
+            if (nowHP > maxHP)
+                nowHP = maxHP;
+            ChangeHPOnUI.Invoke(nowHP, maxHP);
+        }
+
+        public bool Damaged()
+        {
+            return nowHP != maxHP;
         }
     }
 }

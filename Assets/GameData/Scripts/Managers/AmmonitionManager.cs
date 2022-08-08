@@ -4,33 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Game.Manager
 {
-    public class AmmonitionManager : MonoBehaviour
+    public class AmmonitionManager : Spawner
     {
         [SerializeField] private List<DataAmmo> ammos;
-        [SerializeField] private Transform SpawnArea;
-        [SerializeField] private float yPositionSpawn = 0.6f;
 
         private void Awake()
         {
-            FillingPool();
+            for (int j = 0; j < ammos.Count; j++)
+            {
+                ammos[j].ammunitions = base.FillingPool(ammos[j].ammunition.gameObject, ammos[j].count);
+            }
         }
 
         private void Start()
         {
             StartCoroutine(SpawnAmmo());
-        }
-
-        private void FillingPool()
-        {
-            for (int j = 0; j < ammos.Count; j++)
-            {
-                for (int i = 0; i < ammos[j].count; i++)
-                {
-                    Ammunition newAmmo = Instantiate(ammos[j].ammunition);
-                    ammos[j].ammunitions.Add(newAmmo);
-                    newAmmo.gameObject.SetActive(false);
-                }
-            }
         }
 
         private IEnumerator SpawnAmmo()
@@ -51,24 +39,14 @@ namespace Game.Manager
                 yield return null;
             }
         }
-
-        private Vector3 RandomSpawnPosition()
-        {
-            Vector3 pos = Vector3.zero;
-            pos.x = Random.Range(SpawnArea.transform.position.x - SpawnArea.localScale.x / 2, SpawnArea.transform.position.x + SpawnArea.localScale.x / 2);
-            pos.z = Random.Range(SpawnArea.transform.position.z - SpawnArea.localScale.z / 2, SpawnArea.transform.position.z + SpawnArea.localScale.z / 2);
-            pos.y = yPositionSpawn;
-            return pos;
-        }
     }
 
     [System.Serializable]
     public class DataAmmo
     {
         public Ammunition ammunition;
-        public List<Ammunition> ammunitions = new List<Ammunition>();
+        public List<GameObject> ammunitions = new List<GameObject>();
         public int count;
         public float timeToSpawn;
-
     }
 }

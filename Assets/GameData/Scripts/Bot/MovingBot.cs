@@ -46,6 +46,7 @@ namespace Game.Bot
         {
             movingPoints = points;
         }
+
         private Transform ChangeMovingPosition()
         {
             int randomPoint = Random.Range(0, movingPoints.Length);

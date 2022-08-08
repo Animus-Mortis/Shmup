@@ -2875,6 +2875,7 @@ GameObject:
   - component: {fileID: 1424954781}
   - component: {fileID: 1424954780}
   - component: {fileID: 1424954782}
+  - component: {fileID: 1424954783}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2915,7 +2916,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 820066b8da388bf4dba0592d7902e353, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3049,6 +3050,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1424954783}
+        m_TargetAssemblyTypeName: Game.Bot.Die, Assembly-CSharp
+        m_MethodName: DieEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   ChangeHPOnUI:
     m_PersistentCalls:
       m_Calls:
@@ -3064,6 +3077,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1424954783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424954775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64b48dddc23d4714db38377d6d3a1886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedDissolve: 0.5
 --- !u!1 &1512125899
 GameObject:
   m_ObjectHideFlags: 0
@@ -3382,6 +3408,7 @@ GameObject:
   - component: {fileID: 1716038648}
   - component: {fileID: 1716038649}
   - component: {fileID: 1716038650}
+  - component: {fileID: 1716038651}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3455,6 +3482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83526a2cdf9c584198cecac138253bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnArea: {fileID: 571147998}
+  yPositionSpawn: 0.6
   ammos:
   - ammunition: {fileID: 911817585905018718, guid: aa10558975870014c80b256b0b8cd963, type: 3}
     ammunitions: []
@@ -3464,8 +3493,23 @@ MonoBehaviour:
     ammunitions: []
     count: 5
     timeToSpawn: 30
+--- !u!114 &1716038651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716038645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 226b894ddf32c9142aefb9e483dbe3de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   SpawnArea: {fileID: 571147998}
   yPositionSpawn: 0.6
+  medicineChest: {fileID: 5949604634209321912, guid: e5f2bb16d22539a4fb9aacb42fb5dd99, type: 3}
+  count: 10
+  timeToSpawn: 30
 --- !u!1 &1717442363
 GameObject:
   m_ObjectHideFlags: 0
