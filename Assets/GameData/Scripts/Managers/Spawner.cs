@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Manager
 {
@@ -9,6 +10,7 @@ namespace Game.Manager
         [SerializeField] protected Transform SpawnArea;
         [SerializeField] protected float yPositionSpawn = 0.6f;
 
+        [Inject] private DiContainer diContainer;
 
         public virtual List<GameObject> FillingPool(GameObject prefab, int count)
         {
@@ -16,7 +18,7 @@ namespace Game.Manager
 
             for (int i = 0; i < count; i++)
             {
-                GameObject newObj = Instantiate(prefab);
+                GameObject newObj = diContainer.InstantiatePrefab(prefab);
                 newObj.gameObject.SetActive(false);
                 pool.Add(newObj);
             }

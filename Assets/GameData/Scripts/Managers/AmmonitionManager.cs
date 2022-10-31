@@ -2,11 +2,13 @@ using Game.Pickable;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace Game.Manager
 {
     public class AmmonitionManager : Spawner
     {
         [SerializeField] private List<DataAmmo> ammos;
+
 
         private void Awake()
         {

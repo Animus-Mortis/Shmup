@@ -2,6 +2,7 @@ using Game.Manager;
 using Game.Player;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Bot
 {
@@ -12,12 +13,10 @@ namespace Game.Bot
 
         public float distanceToAttack;
 
-        private PlayerHealth player;
+        [Inject] private PlayerHealth player;
 
         private void Start()
         {
-            player = ListLinkObject.instance.Player.GetComponent<PlayerHealth>();
-
             StartCoroutine(CheckCanAttack());
         }
 

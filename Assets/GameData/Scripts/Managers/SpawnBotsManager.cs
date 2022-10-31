@@ -2,6 +2,7 @@ using Game.Bot;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Manager
 {
@@ -16,6 +17,8 @@ namespace Game.Manager
         [SerializeField] private int MaxCountBotsInWave;
         [SerializeField] private float yPositionSpawn = 0.6f;
         [SerializeField] private float timeToSpawnBot;
+
+        [Inject] private DiContainer diContainer;
 
         private MeshRenderer mesh;
 
@@ -48,7 +51,7 @@ namespace Game.Manager
             {
                 for (int j = 0; j < MaxCountBotsInWave; j++)
                 {
-                    GameObject newBot = Instantiate(botPrefabs[i]);
+                    GameObject newBot = diContainer.InstantiatePrefab(botPrefabs[i]);
                     newBot.SetActive(false);
                     newBot.GetComponent<HealthBot>().AddSpwnerManager(this);
                     newBot.GetComponent<MovingBot>().AddSpwnerManager(this);

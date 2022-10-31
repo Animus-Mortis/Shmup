@@ -2,6 +2,7 @@ using Game.Manager;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace Game.Bot
 {
@@ -18,6 +19,11 @@ namespace Game.Bot
         private SpawnBotsManager spawnBotsManager;
         private bool seePlayer;
 
+        [Inject]
+        public void Construct(Player.PlayerHealth playerHealth)
+        {
+            playerTransform = playerHealth.transform;
+        }
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -25,7 +31,6 @@ namespace Game.Bot
         }
         private void Start()
         {
-            playerTransform = ListLinkObject.instance.Player;
             AddMovingPoints(spawnBotsManager.movingPoints);
             StartCoroutine(CheckPosition());
             StartCoroutine(CheckPlayer());

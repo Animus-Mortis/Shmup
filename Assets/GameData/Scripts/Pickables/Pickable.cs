@@ -1,6 +1,7 @@
 using Game.Player;
 using Game.Weapon;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Pickable
 {
@@ -8,18 +9,13 @@ namespace Game.Pickable
     {
         [SerializeField] protected int value;
 
-        protected PlayerHealth playerHealth;
-
-        private void Start()
-        {
-            playerHealth = Manager.ListLinkObject.instance.Player.GetComponent<PlayerHealth>();
-        }
+        [Inject] protected PlayerHealth playerHealth;
 
         public virtual void PickUp(WeaponType weaponType)
         {
-            for(int i=0; i < Manager.WeaponsManager.instance.weapons.Count; i++)
+            for (int i = 0; i < Manager.WeaponsManager.instance.weapons.Count; i++)
             {
-                if(weaponType == Manager.WeaponsManager.instance.weapons[i].type)
+                if (weaponType == Manager.WeaponsManager.instance.weapons[i].type)
                 {
                     Manager.WeaponsManager.instance.weapons[i].countInBag += value;
                     Manager.WeaponsManager.instance.ViewCountShell();
