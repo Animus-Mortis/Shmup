@@ -1,4 +1,3 @@
-using Game.Manager;
 using Game.Player;
 using System.Collections;
 using UnityEngine;
@@ -13,14 +12,18 @@ namespace Game.Bot
 
         public float distanceToAttack;
 
+        private Animator animator;
+        private int randomTypeAttack;
+        private bool attacked;
         [Inject] private PlayerHealth player;
 
         private void Start()
         {
+            animator = GetComponent<MovingBot>().animator;
             StartCoroutine(CheckCanAttack());
         }
 
-        private void SetDamage()
+        public void SetDamage()
         {
             player.TakeDamage(gamage);
         }
@@ -31,8 +34,15 @@ namespace Game.Bot
             {
                 while(Vector3.Distance(transform.position, player.transform.position) < distanceToAttack)
                 {
-                    SetDamage();
+                    attacked = true;
+                    randomTypeAttack = Random.Range(1, 3);
+                    animator.SetBool($"Attack 0{randomTypeAttack}", true);
                     yield return new WaitForSeconds(speedAttack);
+                }
+                if (attacked)
+                {
+                    animator.SetBool($"Attack 0{randomTypeAttack}", false);
+                    attacked = false;
                 }
                 yield return new WaitForSeconds(0.2f);
             }

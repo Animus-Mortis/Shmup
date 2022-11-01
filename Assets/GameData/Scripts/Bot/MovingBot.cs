@@ -8,6 +8,8 @@ namespace Game.Bot
 {
     public class MovingBot : MonoBehaviour
     {
+        public Animator animator;
+
         [SerializeField] private Transform[] movingPoints;
         [SerializeField] private float distanceToVisionPlayer;
         [SerializeField] private float speedMove;
@@ -83,6 +85,9 @@ namespace Game.Bot
                             yield return new WaitForSeconds(0.2f);
                         }
                     }
+                    animator.ResetTrigger("Run Forward");
+                    animator.SetTrigger("Walk Forward");
+
                     MoveAgent(ChangeMovingPosition().position);
                     yield return new WaitForSeconds(0.2f);
                 }
@@ -96,10 +101,18 @@ namespace Game.Bot
             {
                 while (Vector3.Distance(transform.position, playerTransform.position) < distanceToVisionPlayer)
                 {
+                    animator.ResetTrigger("Walk Forward");
+
                     if (Vector3.Distance(transform.position, playerTransform.position) < MeleeAttack.distanceToAttack)
+                    {
                         agent.speed = 0;
+                        animator.ResetTrigger("Run Forward");
+                    }
                     else
+                    {
+                        animator.SetTrigger("Run Forward");
                         agent.speed = speedMove;
+                    }
 
                     MoveAgent(playerTransform.position);
                     seePlayer = true;

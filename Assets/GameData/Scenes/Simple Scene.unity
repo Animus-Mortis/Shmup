@@ -3740,6 +3740,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedDissolve: 0.5
+  rendererBody: {fileID: 1424954777}
+  ActionWithDieEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1512125899
 GameObject:
   m_ObjectHideFlags: 0
@@ -4264,7 +4268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2facca2ec978d6a478c4871fe3960f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1424954779}
 --- !u!4 &1716038647
 Transform:
   m_ObjectHideFlags: 0

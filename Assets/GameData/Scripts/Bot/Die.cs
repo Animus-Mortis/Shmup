@@ -1,24 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Bot
 {
     public class Die : MonoBehaviour
     {
         [SerializeField] private float speedDissolve = 1;
+        [SerializeField] private Renderer rendererBody;
+        [SerializeField] private UnityEvent ActionWithDieEvent;
         private Material material;
         private float alfa;
 
         private void Awake()
         {
-            material = GetComponent<MeshRenderer>().material;
+            material = rendererBody.material;
             alfa = material.GetFloat("_Alfa");
         }
 
         public void DieEffect()
         {
             StartCoroutine(Dissolve());
+            ActionWithDieEvent.Invoke();
         }
 
         private IEnumerator Dissolve()
