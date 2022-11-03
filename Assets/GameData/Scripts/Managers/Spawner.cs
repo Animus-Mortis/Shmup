@@ -1,24 +1,27 @@
-using System.Collections;
+using Game.Factory;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 namespace Game.Manager
 {
+    [RequireComponent(typeof(FactoryObject))]
     public class Spawner : MonoBehaviour
     {
         [SerializeField] protected Transform SpawnArea;
         [SerializeField] protected float yPositionSpawn = 0.6f;
 
-        [Inject] private DiContainer diContainer;
-
+        private FactoryObject factory;
+        protected void Awake()
+        {
+            factory = GetComponent<FactoryObject>();
+        }
         public virtual List<GameObject> FillingPool(GameObject prefab, int count)
         {
             List<GameObject> pool = new List<GameObject>();
 
             for (int i = 0; i < count; i++)
             {
-                GameObject newObj = diContainer.InstantiatePrefab(prefab);
+                GameObject newObj = factory.InstantiateObjectWithInzect(prefab, Vector3.zero, Quaternion.identity, null);
                 newObj.gameObject.SetActive(false);
                 pool.Add(newObj);
             }

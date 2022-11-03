@@ -2,10 +2,11 @@ using Game.Bot;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using Game.Factory;
 
 namespace Game.Manager
 {
+    [RequireComponent(typeof(FactoryObject))]
     public class SpawnBotsManager : MonoBehaviour
     {
         public Transform[] movingPoints;
@@ -18,14 +19,14 @@ namespace Game.Manager
         [SerializeField] private float yPositionSpawn = 0.6f;
         [SerializeField] private float timeToSpawnBot;
 
-        [Inject] private DiContainer diContainer;
-
         private MeshRenderer mesh;
+        private FactoryObject factory;
 
         private void Awake()
         {
             mesh = GetComponent<MeshRenderer>();
             mesh.enabled = false;
+            factory = GetComponent<FactoryObject>();
 
             FillingPool();
         }
@@ -51,7 +52,7 @@ namespace Game.Manager
             {
                 for (int j = 0; j < MaxCountBotsInWave; j++)
                 {
-                    GameObject newBot = diContainer.InstantiatePrefab(botPrefabs[i]);
+                    GameObject newBot = factory.InstantiateObjectWithInzect(botPrefabs[i], Vector3.zero, Quaternion.identity, null);
                     newBot.SetActive(false);
                     newBot.GetComponent<HealthBot>().AddSpwnerManager(this);
                     newBot.GetComponent<MovingBot>().AddSpwnerManager(this);

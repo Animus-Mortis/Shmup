@@ -19,7 +19,7 @@ namespace Game.Bot
         private Transform nowMovingPoints;
         private MeleeAttackBot MeleeAttack;
         private SpawnBotsManager spawnBotsManager;
-        private bool seePlayer;
+       [SerializeField] private bool seePlayer;
 
         [Inject]
         public void Construct(Player.PlayerHealth playerHealth)
@@ -78,6 +78,8 @@ namespace Game.Bot
             {
                 while (!seePlayer)
                 {
+                    StartWalkAnimation();
+
                     if (nowMovingPoints != null)
                     {
                         while (Vector3.Distance(transform.position, nowMovingPoints.position) > 0.5f)
@@ -85,14 +87,18 @@ namespace Game.Bot
                             yield return new WaitForSeconds(0.2f);
                         }
                     }
-                    animator.ResetTrigger("Run Forward");
-                    animator.SetTrigger("Walk Forward");
 
                     MoveAgent(ChangeMovingPosition().position);
                     yield return new WaitForSeconds(0.2f);
                 }
                 yield return null;
             }
+        }
+
+        private void StartWalkAnimation()
+        {
+            animator.ResetTrigger("Run Forward");
+            animator.SetTrigger("Walk Forward");
         }
 
         private IEnumerator CheckPlayer()
@@ -121,7 +127,7 @@ namespace Game.Bot
 
                 if (nowMovingPoints != null)
                     MoveAgent(nowMovingPoints.position);
-
+                StartWalkAnimation();
                 seePlayer = false;
                 yield return null;
             }

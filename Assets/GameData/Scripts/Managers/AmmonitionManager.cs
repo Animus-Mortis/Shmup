@@ -12,6 +12,7 @@ namespace Game.Manager
 
         private void Awake()
         {
+            base.Awake();
             for (int j = 0; j < ammos.Count; j++)
             {
                 ammos[j].ammunitions = base.FillingPool(ammos[j].ammunition.gameObject, ammos[j].count);

@@ -15,6 +15,7 @@ namespace Game.Manager
 
         private void Awake()
         {
+            base.Awake();
             chests = base.FillingPool(medicineChest.gameObject, count);
         }
 
