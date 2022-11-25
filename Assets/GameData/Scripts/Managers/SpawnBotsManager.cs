@@ -30,6 +30,7 @@ namespace Game.Manager
 
             FillingPool();
         }
+
         private void Start()
         {
             StartCoroutine(CheckBotInWave());

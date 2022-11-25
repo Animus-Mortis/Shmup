@@ -11,6 +11,7 @@ namespace Game.Player
         [SerializeField] private UnityEvent<float,float> ChangeHPOnUI;
 
         private bool die;
+        public bool IsDie { get { return die; } }
 
         private void Start()
         {

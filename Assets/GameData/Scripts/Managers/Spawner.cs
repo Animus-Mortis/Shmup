@@ -11,10 +11,12 @@ namespace Game.Manager
         [SerializeField] protected float yPositionSpawn = 0.6f;
 
         private FactoryObject factory;
+
         protected void Awake()
         {
             factory = GetComponent<FactoryObject>();
         }
+
         public virtual List<GameObject> FillingPool(GameObject prefab, int count)
         {
             List<GameObject> pool = new List<GameObject>();

@@ -13,6 +13,7 @@ namespace Game.Player
         [SerializeField] private float speedRotation;
 
         private Coroutine MovingCoroutin;
+
         [HideInInspector] public Vector3 move;
 
         private void Awake()
@@ -22,6 +23,7 @@ namespace Game.Player
             else
                 Destroy(this);
         }
+
         private void Start()
         {
             MovingCoroutin = StartCoroutine(Moving());
@@ -31,6 +33,7 @@ namespace Game.Player
         {
             StopCoroutine(MovingCoroutin);
         }
+
         private IEnumerator Moving()
         {
             while (true)

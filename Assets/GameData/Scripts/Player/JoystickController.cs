@@ -8,6 +8,7 @@ namespace Game.Player
         [SerializeField] private RectTransform joystickBody;
         [SerializeField] private RectTransform joystickHandle;
         [SerializeField] private Canvas canvas;
+
         private Vector2 inputVector = Vector2.zero;
 
         public float HorizontalAxis { get { return inputVector.x; } }
@@ -35,7 +36,7 @@ namespace Game.Player
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            //joystickBody.position = eventData.position;
+            joystickBody.position = eventData.position;
             joystickBody.gameObject.SetActive(true);
         }
 

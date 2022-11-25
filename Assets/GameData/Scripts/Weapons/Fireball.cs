@@ -1,4 +1,3 @@
-
 namespace Game.Weapon
 {
     public class Fireball : Weapon

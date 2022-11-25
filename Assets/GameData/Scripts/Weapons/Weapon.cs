@@ -12,11 +12,18 @@ namespace Game.Weapon
         [SerializeField] protected float reloadTime;
         [SerializeField] protected int maxCountInHands;
         [SerializeField] protected int maxCountInBag;
-        [SerializeField] public WeaponType type;
-        [SerializeField] public Sprite icon;
 
-        public int countInHands;
-        public int countInBag;
+        [SerializeField] private WeaponType type;
+        public WeaponType Type { get { return type; } }
+
+        [SerializeField] private Sprite icon;
+        public Sprite Icon { get { return icon; } }
+
+        [SerializeField] private int countInHands;
+        public int CountInHands { get { return countInHands; } }
+
+        public int CountInBag;
+
         protected List<GameObject> poolShell = new List<GameObject>();
 
         private Coroutine ShutingCoroutin;
@@ -26,9 +33,9 @@ namespace Game.Weapon
         protected void Start()
         {
             countInHands = maxCountInHands;
-            countInBag = maxCountInBag;
+            CountInBag = maxCountInBag;
 
-           WeaponsManager.instance.ViewCountShell();
+            WeaponsManager.instance.ViewCountShell();
         }
 
         public virtual void Shuting()
@@ -41,7 +48,8 @@ namespace Game.Weapon
             canShut = false;
             if (ShutingCoroutin != null)
                 StopCoroutine(ShutingCoroutin);
-            if (countInBag > 0 && countInHands == 0 && RemoteCoroutine == null)
+
+            if (CountInBag > 0 && countInHands == 0 && RemoteCoroutine == null)
                 RemoteCoroutine = StartCoroutine(RemoteWeapon());
 
             StartCoroutine(ShutDelay());
@@ -70,8 +78,8 @@ namespace Game.Weapon
                 {
                     if (!poolShell[i].activeSelf)
                     {
-                        poolShell[i].transform.position = WeaponsManager.instance.shutPoint.position;
-                        poolShell[i].transform.rotation = WeaponsManager.instance.shutPoint.GetComponentInParent<Transform>().rotation;
+                        poolShell[i].transform.position = WeaponsManager.instance.ShutPoint.position;
+                        poolShell[i].transform.rotation = WeaponsManager.instance.ShutPoint.GetComponentInParent<Transform>().rotation;
                         poolShell[i].SetActive(true);
                         break;
                     }
@@ -79,7 +87,7 @@ namespace Game.Weapon
                 countInHands--;
                 WeaponsManager.instance.ViewCountShell();
 
-                if (countInBag > 0 && countInHands == 0 && RemoteCoroutine == null)
+                if (CountInBag > 0 && countInHands == 0 && RemoteCoroutine == null)
                     RemoteCoroutine = StartCoroutine(RemoteWeapon());
 
                 yield return new WaitForSeconds(timeToAttack);
@@ -92,15 +100,16 @@ namespace Game.Weapon
                 StopCoroutine(ShutingCoroutin);
 
             yield return new WaitForSeconds(reloadTime);
+
             int countShell;
-            if (countInBag >= maxCountInHands)
+            if (CountInBag >= maxCountInHands)
             {
                 countShell = maxCountInHands;
             }
             else
-                countShell = countInBag;
+                countShell = CountInBag;
 
-            countInBag -= countShell;
+            CountInBag -= countShell;
             countInHands = countShell;
             WeaponsManager.instance.ViewCountShell();
             RemoteCoroutine = null;

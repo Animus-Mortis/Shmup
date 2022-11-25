@@ -8,10 +8,14 @@ namespace Game.Manager
     {
         public static WeaponsManager instance;
 
-        public Transform shutPoint;
-        public List<Weapon.Weapon> weapons;
-        public Image iconWeapon;
-        public Text shellText;
+        [SerializeField] private Transform shutPoint;
+        public Transform ShutPoint { get { return shutPoint; } }
+
+        [SerializeField] private List<Weapon.Weapon> weapons;
+        public List<Weapon.Weapon> Weapons { get { return weapons; } }
+
+        [SerializeField] private Image iconWeapon;
+        [SerializeField] private Text shellText;
 
         private int numberWeapon;
         private Weapon.Weapon chosenWeapon;
@@ -22,7 +26,7 @@ namespace Game.Manager
             else Destroy(this);
 
             chosenWeapon = weapons[numberWeapon];
-            iconWeapon.sprite = chosenWeapon.icon;
+            iconWeapon.sprite = chosenWeapon.Icon;
         }
 
         public void ChangeWeapon()
@@ -33,7 +37,7 @@ namespace Game.Manager
                 numberWeapon = 0;
 
             chosenWeapon = weapons[numberWeapon];
-            iconWeapon.sprite = chosenWeapon.icon;
+            iconWeapon.sprite = chosenWeapon.Icon;
             ViewCountShell();
         }
 
@@ -49,7 +53,7 @@ namespace Game.Manager
 
         public void ViewCountShell()
         {
-           shellText.text = $"{chosenWeapon.countInHands}/{chosenWeapon.countInBag}";
+            shellText.text = $"{chosenWeapon.CountInHands}/{chosenWeapon.CountInBag}";
         }
     }
 }

@@ -19,18 +19,20 @@ namespace Game.Bot
         private Transform nowMovingPoints;
         private MeleeAttackBot MeleeAttack;
         private SpawnBotsManager spawnBotsManager;
-       [SerializeField] private bool seePlayer;
+        private bool seePlayer;
 
         [Inject]
         public void Construct(Player.PlayerHealth playerHealth)
         {
             playerTransform = playerHealth.transform;
         }
+
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             MeleeAttack = GetComponent<MeleeAttackBot>();
         }
+
         private void Start()
         {
             AddMovingPoints(spawnBotsManager.movingPoints);
@@ -103,9 +105,10 @@ namespace Game.Bot
 
         private IEnumerator CheckPlayer()
         {
-            while (true)
+            Player.PlayerHealth playerHealth = playerTransform.GetComponent<Player.PlayerHealth>();
+            while (!playerHealth.IsDie)
             {
-                while (Vector3.Distance(transform.position, playerTransform.position) < distanceToVisionPlayer)
+                while (Vector3.Distance(transform.position, playerTransform.position) < distanceToVisionPlayer && !playerHealth.IsDie)
                 {
                     animator.ResetTrigger("Walk Forward");
 
@@ -125,12 +128,19 @@ namespace Game.Bot
                     yield return new WaitForSeconds(0.2f);
                 }
 
-                if (nowMovingPoints != null)
-                    MoveAgent(nowMovingPoints.position);
-                StartWalkAnimation();
-                seePlayer = false;
+                NotSeePlayer();
                 yield return null;
             }
+            NotSeePlayer();
+        }
+
+        private void NotSeePlayer()
+        {
+            if (nowMovingPoints != null)
+                MoveAgent(nowMovingPoints.position);
+            StartWalkAnimation();
+            seePlayer = false;
+            agent.speed = speedMove;
         }
     }
 }

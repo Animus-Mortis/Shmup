@@ -13,11 +13,11 @@ namespace Game.Pickable
 
         public virtual void PickUp(WeaponType weaponType)
         {
-            for (int i = 0; i < Manager.WeaponsManager.instance.weapons.Count; i++)
+            for (int i = 0; i < Manager.WeaponsManager.instance.Weapons.Count; i++)
             {
-                if (weaponType == Manager.WeaponsManager.instance.weapons[i].type)
+                if (weaponType == Manager.WeaponsManager.instance.Weapons[i].Type)
                 {
-                    Manager.WeaponsManager.instance.weapons[i].countInBag += value;
+                    Manager.WeaponsManager.instance.Weapons[i].CountInBag += value;
                     Manager.WeaponsManager.instance.ViewCountShell();
                     break;
                 }

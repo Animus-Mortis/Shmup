@@ -15,6 +15,7 @@ namespace Game.Bot
         private Animator animator;
         private int randomTypeAttack;
         private bool attacked;
+
         [Inject] private PlayerHealth player;
 
         private void Start()
@@ -39,11 +40,13 @@ namespace Game.Bot
                     animator.SetBool($"Attack 0{randomTypeAttack}", true);
                     yield return new WaitForSeconds(speedAttack);
                 }
+
                 if (attacked)
                 {
                     animator.SetBool($"Attack 0{randomTypeAttack}", false);
                     attacked = false;
                 }
+
                 yield return new WaitForSeconds(0.2f);
             }
         }

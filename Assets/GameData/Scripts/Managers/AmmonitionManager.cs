@@ -9,7 +9,6 @@ namespace Game.Manager
     {
         [SerializeField] private List<DataAmmo> ammos;
 
-
         private void Awake()
         {
             base.Awake();

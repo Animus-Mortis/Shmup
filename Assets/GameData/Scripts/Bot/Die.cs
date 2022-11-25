@@ -10,6 +10,7 @@ namespace Game.Bot
         [SerializeField] private float speedDissolve = 1;
         [SerializeField] private Renderer[] rendererBody;
         [SerializeField] private UnityEvent ActionWithDieEvent;
+
         private List<DissolvingMaterial> dissolvingMaterial = new List<DissolvingMaterial>();
 
         private void Awake()
@@ -18,8 +19,6 @@ namespace Game.Bot
             {
                 dissolvingMaterial.Add(new DissolvingMaterial(rendererBody[i].material, rendererBody[i].material.GetFloat("_Alfa")));
             }
-            //material = rendererBody.material;
-            //alfa = material.GetFloat("_Alfa");
         }
 
         public void DieEffect()
@@ -28,6 +27,7 @@ namespace Game.Bot
             {
                 StartCoroutine(Dissolve(dissolvingMaterial[i]));
             }
+
             ActionWithDieEvent.Invoke();
         }
 
@@ -39,6 +39,7 @@ namespace Game.Bot
                 dissolvingMaterial.material.SetFloat("_Alfa", dissolvingMaterial.alfa);
                 yield return new WaitForFixedUpdate();
             }
+
             gameObject.SetActive(false);
         }
     }
